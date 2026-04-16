@@ -1,0 +1,29 @@
+package hust.soict.globalict.test.cart;
+import hust.soict.globalict.aims.cart.Cart;
+import hust.soict.globalict.aims.disc.DigitalVideoDisc;
+
+public class CartTest {
+    public static void main(String[] args) {
+        Cart cart = new Cart();
+
+        DigitalVideoDisc dvd1 = new DigitalVideoDisc("The Lion King", "Animation", "Roger Allers", 87, 19.95f);
+        cart.addDigitalVideoDisc(dvd1);
+
+        DigitalVideoDisc dvd2 = new DigitalVideoDisc("Star Wars", "Science Fiction", "George Lucas", 87, 24.95f);
+        cart.addDigitalVideoDisc(dvd2);
+
+        DigitalVideoDisc dvd3 = new DigitalVideoDisc("Animation", "Aladin", 18.99f);
+        cart.addDigitalVideoDisc(dvd3);
+
+        cart.print();
+
+        System.out.println("\n--- Test Search by ID 1 ---");
+        cart.searchById(1);
+
+        System.out.println("\n--- Test Search by Title 'Star Wars' ---");
+        cart.searchByTitle("Star Wars");
+        
+        System.out.println("\n--- Test Search by Title 'Iron Man' (Not in cart) ---");
+        cart.searchByTitle("Iron Man");
+    }
+}
