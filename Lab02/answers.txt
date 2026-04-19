@@ -1,5 +1,4 @@
 Lab 03:
-
 Phần 16: Polymorphism (Đa hình) 
 
 Quan sát chuyện gì xảy ra khi lặp qua danh sách Media và gọi toString() :
