@@ -1,65 +1,44 @@
-ANSWERS FOR LAB 02
+Lab 03:
 
-1. Mục 10 – Constructor Overloading
+Phần 16: Polymorphism (Đa hình) 
 
-Câu hỏi:
-Nếu tạo một constructor với title, và một constructor khác với category thì có được không?
+Quan sát chuyện gì xảy ra khi lặp qua danh sách Media và gọi toString() :
 
-Trả lời:
-KHÔNG.
+Dù vòng lặp sử dụng tham chiếu kiểu lớp cha là Media, nhưng khi gọi hàm toString(), Java sẽ tự động gọi đúng hàm toString() tương ứng của đối tượng thực sự tại thời điểm chạy (Book, CompactDisc, hoặc DigitalVideoDisc). Đây là biểu hiện của tính đa hình qua cơ chế Dynamic Method Dispatch.
 
-Giải thích:
-Java phân biệt constructor dựa trên method signature (tên + kiểu tham số).
-Hai constructor:
+Ưu điểm của Polymorphism:
 
-DigitalVideoDisc(String title)
-DigitalVideoDisc(String category)
+Tăng tính linh hoạt và khả năng mở rộng của mã nguồn.
 
-đều có cùng chữ ký (1 tham số kiểu String), nên trình biên dịch không phân biệt được → lỗi compile-time.
+Giảm thiểu việc phải sử dụng các cấu trúc điều kiện phức tạp (if-else, switch-case) để kiểm tra kiểu đối tượng.
 
-2. Mục 14.1 – Varargs vs Array
+Cho phép sử dụng một giao diện/lớp cha duy nhất để quản lý và tương tác với nhiều loại đối tượng con khác nhau.
 
-Câu hỏi:
-So sánh varargs và mảng. Nên dùng cách nào?
+Inheritance giúp ích gì trong việc đạt được Polymorphism?:
 
-Trả lời:
-Nên dùng varargs.
+Kế thừa (Inheritance) tạo ra mối quan hệ cha-con (IS-A) giữa các class. Nó cho phép các class con ghi đè (override) phương thức của class cha, tạo tiền đề để tính đa hình hoạt động khi một biến kiểu cha tham chiếu đến đối tượng kiểu con.
 
-Giải thích:
+Sự khác biệt giữa Polymorphism và Inheritance?:
 
-Varargs (DigitalVideoDisc... dvds) cho phép gọi hàm linh hoạt:
-addDigitalVideoDisc(dvd1, dvd2, dvd3)
-Vẫn có thể truyền mảng nếu cần
-Ngắn gọn, dễ dùng hơn
+Inheritance (Kế thừa) là hành động tái sử dụng mã nguồn và cấu trúc thuộc tính/phương thức từ một class có sẵn để tạo ra class mới.
 
-Trong khi đó, dùng mảng:
-addDigitalVideoDisc(new DigitalVideoDisc[]{dvd1, dvd2})
-→ dài dòng, kém tiện hơn.
+Polymorphism (Đa hình) là khả năng một đối tượng hoặc một phương thức có thể thực thi theo nhiều cách khác nhau tùy thuộc vào ngữ cảnh thực tế lúc chương trình đang chạy.
 
-3. Mục 15 – Passing Parameter
 
-Câu hỏi:
-Java là pass by value hay pass by reference?
+Phần 17: Sort media in the cart (Sắp xếp) 
 
-Trả lời:
-Java luôn là pass by value.
+Lớp nào nên implement interface Comparable?:
 
-4. Mục 15 – Giải thích TestPassingParameter
+Lớp Media nên implement Comparable<Media>.
 
-Câu hỏi 1:
-Tại sao sau khi gọi swap(jungleDVD, cinderellaDVD) thì title không đổi?
+Cài đặt hàm compareTo() như thế nào để phản ánh thứ tự mong muốn?:
 
-Trả lời:
-Java truyền bản sao của reference.
-Trong hàm swap, việc đổi o1 và o2 chỉ thay đổi biến cục bộ, không ảnh hưởng đến biến gốc bên ngoài → đối tượng không đổi.
+Ghi đè phương thức compareTo(Media other) trong lớp Media và định nghĩa một tiêu chí so sánh mặc định duy nhất (ví dụ: so sánh Title trước, nếu trùng thì so sánh Cost).
 
-Câu hỏi 2:
-Tại sao sau khi gọi changeTitle(...) thì title của jungleDVD bị đổi?
+Có thể có 2 quy tắc sắp xếp (Title->Cost và Cost->Title) nếu dùng Comparable không?:
 
-Trả lời:
-Biến dvd trong hàm trỏ tới cùng đối tượng với jungleDVD.
+KHÔNG. Interface Comparable chỉ cho phép định nghĩa MỘT quy tắc sắp xếp tự nhiên duy nhất (natural ordering) cho một class thông qua phương thức compareTo(). Để có nhiều quy tắc, bắt buộc phải dùng Comparator.
 
-Khi gọi dvd.setTitle(title) → đối tượng gốc bị thay đổi
-Sau đó dvd = new DigitalVideoDisc(...) chỉ làm thay đổi biến cục bộ
+Nếu DVD có quy tắc sắp xếp riêng (Title -> giảm dần Length -> Cost), cần sửa code thế nào?:
 
-→ Kết quả: đối tượng ban đầu đã bị sửa trước đó nên title bị thay đổi.
+Tạo một class mới implements Comparator<DigitalVideoDisc>. Trong hàm compare(), viết logic lần lượt: so sánh Title bằng compareTo, nếu bằng 0 thì so sánh Length theo chiều giảm dần, nếu vẫn bằng nhau thì so sánh Cost. Truyền Comparator này vào Collections.sort() khi cần sắp xếp riêng danh sách DVD.
