@@ -23,4 +23,8 @@ public class Store {
             System.out.println("The media " + media.getTitle() + " is not in the store.");
         }
     }
+
+    public java.util.ArrayList<hust.soict.globalict.aims.media.Media> getItemsInStore() {
+        return itemsInStore;
+    }
 }
