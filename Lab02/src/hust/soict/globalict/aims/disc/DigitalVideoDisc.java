@@ -1,5 +1,5 @@
-package hust.soict.globalict.aims.media;
-
+package hust.soict.globalict.aims.disc;
+import hust.soict.globalict.aims.media.Media;
 
 public class DigitalVideoDisc extends Media{
     private String title;
